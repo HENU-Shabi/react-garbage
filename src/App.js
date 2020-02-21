@@ -1,24 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
+import LogIn from "./component/LogIn";
 import './App.css';
+import {useCookies} from "react-cookie";
+import AppBody from "./component/AppBody";
 
 function App() {
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
+  let bodyElement;
+  if(cookies.token === undefined){
+    bodyElement = <LogIn cookie={[cookies, setCookie, removeCookie]}/>
+  }else{
+    bodyElement = <AppBody cookie={[cookies, setCookie, removeCookie]}/>
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {bodyElement}
     </div>
   );
 }
